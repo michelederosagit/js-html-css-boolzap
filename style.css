@@ -11,7 +11,20 @@ body {
 }
 
 .separator-right {
-    border-right: 2px solid grey;
+    border-right: 2px solid #e3e3e3;
+}
+
+.left, .right {
+    height: 95vh;
+    overflow: hidden;
+}
+
+#template {
+    display: none;
+}
+
+.hide {
+    display: none!important;
 }
 
 /* Regole Sfondo */
@@ -20,14 +33,14 @@ body {
     height: 150px;
     background-color: #009688;
     z-index: -1;
-
 }
 
 /* Regole Barra Laterale Sx */
 .container {
     padding: 0px;
-    margin-top: 3%;
-    height: 90vh;
+    height: 95vh;
+    margin-bottom: 10px;
+    margin-top: 20px;
 }
     /* Intestazione Chat */
 .head-chat {
@@ -52,14 +65,13 @@ body {
     /* Blocco Notifiche */
 .notification {
     background-color: rgb(142, 218, 252);
-    height: 80px;
+    min-height: 80px;
+    padding: 15px;
 }
 .notification .fas {
     font-size: 40px;
     color: black;
-    margin-left: 20px;
 }
-
 .alert-notification {
     margin-left: 10px;
 }
@@ -105,20 +117,32 @@ body {
 }
 
     /* Blocco Lista Chats */
+.usr-info {
+    margin-left: 10px;
+}
+.usr-info .name {
+    font-size: 16px;
+    line-height: 21px;
+}
+.usr-info .message {
+    font-size: 14px;
+    line-height: 21px;
+}
 .chat-list-box {
-    height: calc(100% - 300px); /* 60vh */
-    overflow: scroll;
+    height: calc(100% - 80px - 80px - 55px);
+    overflow-y: scroll;
 }
 .chat-list {
     background-color: #ffffff;
     height: 80px;
-    border-bottom: 1px solid grey;
-    overflow: auto;
+    border-bottom: 1px solid #e3e3e3;
+    overflow-y: scroll;
 }
 .input-search {
     border: 0px;
     width: 100%;
     margin-left: 10px;
+    overflow-x: hidden;
 }
 
 /* Regole Barra Laterale Dx */
@@ -132,7 +156,7 @@ body {
     /* Chat Box */
 .chat {
     background-image: url('./img/background-chat.png');
-    height: calc(100% - 245px);
+    height: calc(100% - 80px - 80px);
     overflow: scroll;
 }
     /* Messaggio */
@@ -164,4 +188,66 @@ body {
 
 .send-message {
     display: none;
+}
+
+/* Messaggi Chat */
+.pUsr {
+    position: relative;
+}
+
+.pUsr p {
+    background-color: rgb(213,249,186);
+    padding: 10px 50px 10px 10px;
+    color: black;
+    margin: 10px 30px;
+    border-radius: 3px;
+}
+
+.pBot p {
+    background-color: #ffffff;
+    padding: 10px;
+    color: black;
+    margin: 10px 30px;
+    border-radius: 3px;
+}
+
+.icona-menu {
+    font-size: 25px;
+    position: absolute;
+    top: 21px;
+    right: 35px;
+    color: black;
+    opacity: 0.5;
+    display: none;
+}
+
+.icona-menu-up {
+    font-size: 25px;
+    position: absolute;
+    top: 21px;
+    right: 35px;
+    color: black;
+    opacity: 0.5;
+    display: none;
+}
+
+.dropdown {
+    display: none;
+    position: absolute;
+    background: white;
+    width: 150px;
+    height: 50px;
+    z-index: 1;
+    top: 42px;
+    right: 39px;
+    padding: 10px 20px 10px 10px;
+}
+
+.dropdown a {
+    color: black;
+    text-decoration: none;
+}
+
+.dropdown a:hover {
+    text-decoration: underline;
 }

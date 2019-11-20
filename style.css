@@ -154,7 +154,7 @@ body {
     font-size: 14px;
 }
     /* Chat Box */
-.chat {
+#chat {
     background-image: url('./img/background-chat.png');
     height: calc(100% - 80px - 80px);
     overflow: scroll;
@@ -221,16 +221,6 @@ body {
     display: none;
 }
 
-.icona-menu-up {
-    font-size: 25px;
-    position: absolute;
-    top: 21px;
-    right: 35px;
-    color: black;
-    opacity: 0.5;
-    display: none;
-}
-
 .dropdown {
     display: none;
     position: absolute;
@@ -250,4 +240,21 @@ body {
 
 .dropdown a:hover {
     text-decoration: underline;
+}
+
+#chat .pUsr .icona-menu.show {
+    display: inline;
+}
+
+#chat .pUsr .dropdown.show {
+    display: inline;
+}
+
+/* Selezione e Cambio Chat */
+.chat-list-box .chat-list.open {
+    background-color: #eee;
+  }
+
+#chat.hide {
+    display: none;
 }

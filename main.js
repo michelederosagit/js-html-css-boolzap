@@ -70,65 +70,84 @@ $(document ).ready(function() {
       });
     };// Fine Funzione SelectChat
 
-    // Creo funzione invio messaggio utente e bot
+    // Creo funzione invio messaggio utente e bot con Handlebars
     function sendMsg(){
-      // Salvo il messaggio scritto dall'utente
-      var sentUsrMessage = $("#message").val();
-      // Se la mia stringa è vuota
-      if(sentUsrMessage == ""){
-        return alert("Messaggio vuoto");
-      // Se l'utente inserisce uno spazio e preme invio
-      } else if(sentUsrMessage === " "){
-        return alert("Inviare uno spazio non ha senso!!!")
-      }
-      // Creo variabile per selezionarmi l'elemento per copiarlo
-      var elementUsrMessage = $("#template .pUsr").clone();
-      
-      // Creo una variabile che associa il DIV copiato al messaggio scritto dall'utente (Eliminata avendola inclusa già nella variabile precedente)
-      // var elementMsgSent = elementMessage.text(sentMessage);
 
-      // Inserisco il messaggio tra il mio div clonato "elementMessage" e il tag <p>
-      var outputUsr = elementUsrMessage.html("<p>" + sentUsrMessage + "</p>" + "<i class='fas fa-angle-down icona-menu'>" + "</i>" + "<div class='dropdown'>" + "<a href='#'>" + "<span class='text-delete'>" + "Elimina" + "</span>" + "</a>");
+    // Salvo il messaggio scritto dall'utente
+    var sentUsrMessage = $("#message").val();
+    // Se la mia stringa è vuota
+    if(sentUsrMessage == ""){
+      return alert("Messaggio vuoto");
+    // Se l'utente inserisce uno spazio e preme invio
+    } else if(sentUsrMessage === " "){
+      return alert("Inviare uno spazio non ha senso!!!")
+    }
+
+    // Creo variabile per selezionarmi l'elemento per copiarlo
+    // var elementUsrMessage = $("#template .pUsr").clone();
+
+    // Salvo il contenuto dell'id #template-chat-message (Sostituisce quella sopra)
+    var source = $("#template-chat-message").html();
+    console.log(source);
+    // Mi creo una variabile con un template e lo collego alla mia source tramite Handlebars
+    var templateChat = Handlebars.compile(source);
+
+    // Creo una variabile che associa il DIV copiato al messaggio scritto dall'utente (Eliminata avendola inclusa già nella variabile precedente)
+    // var elementMsgSent = elementMessage.text(sentMessage);
+
+    // Inserisco il messaggio tra il mio div clonato "elementMessage" e il tag <p>
+    // var outputUsr = elementUsrMessage.html("<p>" + sentUsrMessage + "</p>" + "<i class='fas fa-angle-down icona-menu'>" + "</i>" + "<div class='dropdown'>" + "<a href='#'>" + "<span class='text-delete'>" + "Elimina" + "</span>" + "</a>");
+
+    // Vado ad inserire il contenuto del mieo valore
+    var contentChat = {messageUsr: sentUsrMessage};
+    var messageChat = templateChat(contentChat);
+
+    // Inserisco il DIV + Messaggio utente dopo una classe messa all'interno dell'html
+    $(".container #chat:not(.hide)").append(messageChat);
+    // ripuliamo il contenuto dell'input, per UX
+    $("#message").val("");
+    // Fine funzione utente
+
+    // Creo funzione per chatbot
+    function botMessageText(){
+      // Creo variabile per selezionarmi l'elemento per copiarlo
+      // var elementBotMessage = $("#template .botMessage .pBot").clone();
+      // console.log(elementBotMessage);
+
+      // Vado a selezionarmi il template che ho creato nell'HTML
+      var sourceBot = $("#template-chat-message-bot").html();
+      // Mi creo una variabile con un template e lo collego alla mia source tramite Handlebars
+      var templateChatBot = Handlebars.compile(sourceBot);
+
+      // Vado da inserire il contenuto del mio valore
+      var contentChatBot = {messageBot: "Ciao io sono un bot"};
+      var messageChatBot = templateChatBot(contentChatBot);
+
+      // Inserisco il messaggio tra il mio div clonato "elementBotMessage" e il tag <p>
+      // var outputBot = elementBotMessage.html("<p>" + "Ciao, io sono un bot" + "</p>");
       
       // Inserisco il DIV + Messaggio utente dopo una classe messa all'interno dell'html
-      $(".container #chat:not(.hide)").append(outputUsr);
-      // ripuliamo il contenuto dell'input, per UX
-      $("#message").val("");
-      // Fine funzione utente
+      $("#chat:not(.hide)").append(messageChatBot);
+    };
+    setTimeout(botMessageText,1000); // Fine funzione bot
 
-      // Creo funzione per chatbot
-      function botMessageText(){
-        // Creo variabile per selezionarmi l'elemento per copiarlo
-        var elementBotMessage = $("#template .botMessage .pBot").clone();
-        console.log(elementBotMessage);
-
-        // Inserisco il messaggio tra il mio div clonato "elementBotMessage" e il tag <p>
-        var outputBot = elementBotMessage.html("<p>" + "Ciao, io sono un bot" + "</p>");
-        
-        // Inserisco il DIV + Messaggio utente dopo una classe messa all'interno dell'html
-        $("#chat:not(.hide)").append(outputBot);
-      };
-      setTimeout(botMessageText,1000); // Fine funzione bot
-
-      // Hover (mouse enter e leave) sul messaggio per far comparire la freccia delle opzioni
-      $('#chat .pUsr').on('mouseenter', function() {
-        $(this).find('.icona-menu').addClass('show');
-      });
-      $('#chat .pUsr').on('mouseleave', function() {
-        $(this).find('.icona-menu').removeClass('show');
-      });
-
-
-      // Al click sulla freccia delle opzioni appare l'opzione per cancellare il messaggio
-      $('.icona-menu').on('click', function() {
-        $(this).siblings('.dropdown').addClass('show');
-      });
-      $('.icona-menu').on('dblclick', function() {
-        $(this).siblings('.dropdown').removeClass('show');
-      });
-      // al click su delete messaggio lo cancello
-      $('.text-delete').on('click', function(){
-        deleteMsg();
-      });
+    // Hover (mouse enter e leave) sul messaggio per far comparire la freccia delle opzioni
+    $('#chat .pUsr').on('mouseenter', function() {
+      $(this).find('.icona-menu').addClass('show');
+    });
+    $('#chat .pUsr').on('mouseleave', function() {
+      $(this).find('.icona-menu').removeClass('show');
+    });
+    // Al click sulla freccia delle opzioni appare l'opzione per cancellare il messaggio
+    $('.icona-menu').on('click', function() {
+      $(this).siblings('.dropdown').addClass('show');
+    });
+    $('.icona-menu').on('dblclick', function() {
+      $(this).siblings('.dropdown').removeClass('show');
+    });
+    // al click su delete messaggio lo cancello
+    $('.text-delete').on('click', function(){
+      deleteMsg();
+    });
     }; // Fine Funzione send
   }); // Document Ready
